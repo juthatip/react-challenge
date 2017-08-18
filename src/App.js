@@ -19,18 +19,18 @@ class App extends Component {
           luck: 0
         }
       },
-      {
-        name: "monster02",
-        status: {
-          hp: 200,
-          mp: 200,
-          str: 200,
-          vit: 200,
-          agi: 200,
-          dex: 200,
-          luck: 0
-        }
-      },
+      // {
+      //   name: "monster02",
+      //   status: {
+      //     hp: 200,
+      //     mp: 200,
+      //     str: 200,
+      //     vit: 200,
+      //     agi: 200,
+      //     dex: 200,
+      //     luck: 0
+      //   }
+      // },
       {
         name: "monster03",
         status: {
@@ -52,67 +52,76 @@ class App extends Component {
       earth: 100
     }
 
-    this.rareItem = {
-      luck: 100
-    }
-
     this.state = {
-      player: {}
+      player: {
+        name: '',
+        status: {}
+      }
     }
 
   }
 
   randomMonster = () => {
+   
     const monster = this.randomItem(this.monster)
-    
+
+    let player = JSON.parse(JSON.stringify(monster))
+
     const elements = Object.keys(this.element)
-    // let element = this.randomItem(elements)
+    let element = this.randomItem(elements)
 
-    let element = 'fire'
+    const rareItem = this.randomItem(this.rareItem)
 
-    console.log(monster)
+    console.log(rareItem)
 
-    let str = monster.status.str
+    //1. get element
+    // let element = 'fire'
+    //2. get monster match element with status
 
-    Object.keys(monster.status).forEach(function (a) {
-      console.log(a)
-      if(element === 'fire') {
-        // element = 'str'
+    // console.log("1 ====" , monster)
+    // Object.keys(monster.status).forEach(function (a) {
+    //   console.log(a)
+    //   if(element === 'fire') {
+    //     // element = 'str'
 
-        str = str + 100
-        console.log(str)
-      }
-    });
+    //     str = str + 100
+    //     console.log(str)
+    //   }
+    // });
 
-      console.log(this.player)
+      // console.log(this.player)
+    let status
 
-    // if(element === 'fire') {
-    //   element = 'str'
-      
-    //   monster.filter((obj) => {
-    //     console.log(obj.status)
-    //   })
-    // }else if (element === 'water') {
-    //   element = 'dex'
-    // }else if (element === 'wind') {
-    //    element = 'agi'
-    // }else if (element === 'earth') {
-    //    element = 'vit'
-    // }
+    if(element === 'fire') {
+      status = 'str'
+    }else if (element === 'water') {
+      status = 'dex'
+    }else if (element === 'wind') {
+      status = 'agi'
+    }else if (element === 'earth') {
+      status = 'vit'
+    }
 
+    player.status[status] += 100
 
-    // this.setState({
-    //   player: monster
-    // })
+   // console.log("before", player.status[status] + 100)
+    
+    this.setState({
+      player: player
+    })
+
+    //console.log("after", this.state.player)
   }
 
   randomItem(items) {
+    console.log(items)
     const item = items[Math.floor(Math.random()*items.length)]
-
+    console.log(items.length)
     return item
   }
 
   render() {
+    // console.log(this.state.player)
     return (
       <div className="App">
         <div className="App-header">
@@ -120,6 +129,13 @@ class App extends Component {
         </div>
         <h1>Choose your Monster</h1>
         <p>{this.state.player.name}</p>
+        <p>HP: {this.state.player.status.hp}</p>
+        <p>MP: {this.state.player.status.mp}</p>
+        <p>STR: {this.state.player.status.str}</p>
+        <p>VIT: {this.state.player.status.vit}</p>
+        <p>AGI: {this.state.player.status.agi}</p>
+        <p>DEX: {this.state.player.status.dex}</p>
+        <p>LUCK: {this.state.player.status.luck}</p>
         <a onClick={this.randomMonster} className="btn">Random</a>
       </div>
     );
