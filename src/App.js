@@ -85,7 +85,7 @@ class App extends Component {
     const randomLuck = Math.floor(Math.random() * 10 + 1)
 
 
-    if (randomLuck == 1) {
+    if (randomLuck === 1) {
       player.status['luck'] += 100
     } else {
       player.status['luck'] = 0
@@ -103,14 +103,6 @@ class App extends Component {
       status = 'vit'
     }
 
-    // this.setState({
-    //   element: {
-    //     [elementVal]: true
-    //   }
-    // })
-
-    // console.log(this.state.element)
-
     player.status[status] += 100
     player.status['extraElement'] = elementVal
 
@@ -126,6 +118,23 @@ class App extends Component {
     return item
   }
 
+  renderPlayerStatus() {
+    if(Object.keys(this.state.player.status).length === 0) return
+    
+    return (
+      <div>
+        <p>Element: {this.state.player.status.extraElement}</p>
+        <p>HP: {this.state.player.status.hp}</p>
+        <p>MP: {this.state.player.status.mp}</p>
+        <p>STR: {this.state.player.status.str}</p>
+        <p>VIT: {this.state.player.status.vit}</p>
+        <p>AGI: {this.state.player.status.agi}</p>
+        <p>DEX: {this.state.player.status.dex}</p>
+        <p>LUCK: {this.state.player.status.luck}</p>
+      </div>
+    )
+  }
+
   render() {
     // console.log(this.state.player)
     return (
@@ -135,14 +144,7 @@ class App extends Component {
         </div>
         <h1>Choose your Monster</h1>
         <p>{this.state.player.name}</p>
-        <p>Element: {this.state.player.status.extraElement}</p>
-        <p>HP: {this.state.player.status.hp}</p>
-        <p>MP: {this.state.player.status.mp}</p>
-        <p>STR: {this.state.player.status.str}</p>
-        <p>VIT: {this.state.player.status.vit}</p>
-        <p>AGI: {this.state.player.status.agi}</p>
-        <p>DEX: {this.state.player.status.dex}</p>
-        <p>LUCK: {this.state.player.status.luck}</p>
+        {this.renderPlayerStatus()}
         <a onClick={this.randomMonster} className="btn">Random</a>
       </div>
     );
