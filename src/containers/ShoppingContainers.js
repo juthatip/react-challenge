@@ -6,39 +6,54 @@ class ShoppingContainers extends Component {
 
     this.state = {
       money: 10000,
-      numItem: 1,
+      currentMoney: 0,
+      totalPrice: 0,
+      numItem: 0,
       selectedItem: '',
-      stateOperation: ''
+      stateOperation: '',
+      msgWarn: false
     }
-
   }
 
   buyItem = (item) => {
 
-    this.setState({ 
+    console.log(" openModal ==>", this.state.currentMoney)
+
+    this.setState({
       selectedItem: item,
-      numItem: 1
+      numItem: 0
     })
-    
-    this.handleCalculateMoney(item)
   }
 
+  // 100000 
+
   decrease = () => {
-    if(this.state.numItem !== 1) {
+    // -
+
+    if(this.state.numItem > 0) {
       this.handleNumberItem(-1, 'decrease')
+
+      if(this.state.msgWarn) {
+        this.setState({ msgWarn: false })
+      }
     }
 
   }
 
   increase = () => {
-    this.handleNumberItem(1, 'increase')
+    // +
+    
+    if(!this.state.msgWarn) {
+      this.handleNumberItem(1, 'increase')
+    }
   }
 
   handleNumberItem(index, operator) {
-    this.setState({
-      numItem: this.state.numItem + index,
-      stateOperation: operator
-    })
+
+      this.setState({ numItem: this.state.numItem + index }, () => {
+        this.handleCalculateMoney()
+      })
+  
   }
 
   handleCalculateMoney = () => {
@@ -46,7 +61,7 @@ class ShoppingContainers extends Component {
     let selectedItem = this.state.selectedItem
     let numItem = this.state.numItem
     let stateOperation = this.state.stateOperation
-    let totalPrice = 0;
+    let totalPrice = this.state.totalPrice;
    
     if(selectedItem === 'meat') {
       price = 2500
@@ -56,24 +71,44 @@ class ShoppingContainers extends Component {
       price = 500
     }
 
-    if(stateOperation === 'increase') {
-      // console.log(price)
-      totalPrice = numItem * price
-    } else {
-      console.log("numItem", numItem)
-      console.log("price", price)
-      totalPrice = price / numItem
-    }
-    console.log("==>", totalPrice)
-    // this.setState({totalPrice: })
+    totalPrice = price * numItem
+
+    console.log("2 ==>", this.state.currentMoney)
+
+    let currentMoney = JSON.parse(JSON.stringify(this.state.money))
+
+    // currentMoney 
+
+    // if(this.state.currentMoney < currentMoney) {
+    
+    // }
+        currentMoney = currentMoney - totalPrice
+
+
+
+        // console.log("===>", currentMoney - price)
+        if(currentMoney - price < 0) {
+          this.setState({ msgWarn: true })
+        }
+
+        console.log("3 ==>", this.state.currentMoney)
+        this.setState({ currentMoney, totalPrice })
 
   }
 
+  handleSubmitBuyItem = () => {
+    console.log("submit", this.state.currentMoney)
+    // this.handleCalculateMoney()
+  }
+
   render() {
-    // console.log(this.state.numItem)//
+
+    const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
+    // console.log(this.state.msgWarn)
+
     return (
       <div>
-        <p>$ {this.state.money}</p>
+        <p>$ {this.state.currentMoney}</p>
 
         <ul className="list-item">
           <li>meat
@@ -94,8 +129,9 @@ class ShoppingContainers extends Component {
           {this.state.selectedItem}
           <button onClick={this.decrease}>-</button>
           <button onClick={this.increase}>+</button>
-          {this.state.numItem} items
-          <button onClick={this.handleCalculateMoney}>OK</button>
+          {this.state.numItem} items 
+          <p>{msgWarn}</p>
+          <button onClick={this.handleSubmitBuyItem}>OK</button>
         </div>
       </div>
     )
