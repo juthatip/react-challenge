@@ -5,8 +5,8 @@ class ShoppingContainers extends Component {
     super(props)
 
     this.state = {
-      money: 10000,
-      currentMoney: 0,
+      totalMoney: '',
+      currentMoney: 10000,
       totalPrice: 0,
       numItem: 0,
       selectedItem: '',
@@ -16,20 +16,13 @@ class ShoppingContainers extends Component {
   }
 
   buyItem = (item) => {
-
-    console.log(" openModal ==>", this.state.currentMoney)
-
     this.setState({
       selectedItem: item,
       numItem: 0
     })
   }
 
-  // 100000 
-
   decrease = () => {
-    // -
-
     if(this.state.numItem > 0) {
       this.handleNumberItem(-1, 'decrease')
 
@@ -41,8 +34,6 @@ class ShoppingContainers extends Component {
   }
 
   increase = () => {
-    // +
-    
     if(!this.state.msgWarn) {
       this.handleNumberItem(1, 'increase')
     }
@@ -62,6 +53,7 @@ class ShoppingContainers extends Component {
     let numItem = this.state.numItem
     let stateOperation = this.state.stateOperation
     let totalPrice = this.state.totalPrice;
+    let currentMoney = this.state.currentMoney;
    
     if(selectedItem === 'meat') {
       price = 2500
@@ -72,33 +64,29 @@ class ShoppingContainers extends Component {
     }
 
     totalPrice = price * numItem
+    currentMoney = currentMoney - totalPrice
 
-    console.log("2 ==>", this.state.currentMoney)
+    // console.log(currentMoney)
 
-    let currentMoney = JSON.parse(JSON.stringify(this.state.money))
+    if(currentMoney < 0) {
+      this.setState({ msgWarn: true, numItem: this.state.numItem - 1 })
+      currentMoney = 0
+      totalPrice = totalPrice - price
+    }
 
-    // currentMoney 
-
-    // if(this.state.currentMoney < currentMoney) {
-    
-    // }
-        currentMoney = currentMoney - totalPrice
-
-
-
-        // console.log("===>", currentMoney - price)
-        if(currentMoney - price < 0) {
-          this.setState({ msgWarn: true })
-        }
-
-        console.log("3 ==>", this.state.currentMoney)
-        this.setState({ currentMoney, totalPrice })
+    this.setState({ totalMoney: totalPrice })
 
   }
 
   handleSubmitBuyItem = () => {
-    console.log("submit", this.state.currentMoney)
-    // this.handleCalculateMoney()
+    const sumMoney = this.state.currentMoney - this.state.totalMoney
+    // console.log(this.state.currentMoney)
+    // console.log(this.state.totalMoney)
+    // console.log(sumMoney)
+
+    this.setState({ currentMoney: sumMoney })
+
+    console.log(this.state.currentMoney)
   }
 
   render() {
