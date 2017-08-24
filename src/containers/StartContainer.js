@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class StartContainers extends Component {
+class StartContainer extends Component {
   constructor(props) {
     super(props)
 
@@ -139,4 +139,4 @@ class StartContainers extends Component {
   }
 }
 
-export default StartContainers
+export default StartContainer

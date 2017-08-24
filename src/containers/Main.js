@@ -2,8 +2,9 @@ import React , { Component } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
 import Nav from '../components/Layout/Nav'
 
-import Shopping from './ShoppingContainers'
-import StartContainers from './StartContainers'
+import Shopping from './ShoppingContainer'
+import StartContainer from './StartContainer'
+import StorageContainer from './StorageContainer'
 
 class Main extends Component {
   render() {
@@ -11,8 +12,9 @@ class Main extends Component {
       <div>
         <Nav />
         <Switch>
-          <Route path="/start" component={StartContainers} />
+          <Route path="/start" component={StartContainer} />
           <Route path="/shop" component={Shopping} />
+          <Route path="/storage" component={StorageContainer} />
         </Switch>
       </div>
     )
