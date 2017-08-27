@@ -10,10 +10,10 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-      <div>
-          <Route path="/" component={Main} />
-      </div>
-    </BrowserRouter>
+        <div>
+            <Route path="/" component={Main} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

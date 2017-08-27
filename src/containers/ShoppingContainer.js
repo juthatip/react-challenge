@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
+import { connect } from 'react-redux'
+import { saveStorage, fetchStorage } from '../actions'
+import ShowMoney from '../components/Shopping'
 
 const customStyles = {
   content: {
@@ -27,9 +30,13 @@ class ShoppingContainer extends Component {
       selectedItem: '',
       stateOperation: '',
       msgWarn: false,
-      modalIsOpen: false
+      modalIsOpen: false,
+      storeItem: {}
     }
 
+    this.data = {}
+
+    props.fetchStorage(this.props.store)
   }
 
   buyItem = (item) => {
@@ -97,7 +104,20 @@ class ShoppingContainer extends Component {
   handleSubmitBuyItem = () => {
     const sumMoney = this.state.currentMoney - this.state.totalMoney
 
-    this.setState({ currentMoney: sumMoney, modalIsOpen: false })
+    let storeItem = []
+
+    storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
+
+    this.setState({ currentMoney: sumMoney, storeItem: storeItem ,modalIsOpen: false }, () => {
+
+      this.data = {
+        currentMoney: this.state.currentMoney,
+        storeItem: this.state.storeItem
+      }
+
+      // console.log("==>" ,this.state.storeItem)
+      this.props.saveStorage(this.data)
+    })
 
   }
 
@@ -110,13 +130,24 @@ class ShoppingContainer extends Component {
     this.setState({modalIsOpen: false});
   }
 
+  renderMoney() {
+    if(!this.props.store) return
+
+    return <ShowMoney money={this.props.store} />
+  }
+
   render() {
 
     const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
 
+    console.log("this.props.store==>", this.props.store)
+
+    
+
     return (
       <div>
-        <p>$ {this.state.currentMoney}</p>
+
+      <ShowMoney money={this.props.store.currentMoney} selectedItem={this.props.store.storeItem} />
 
         <ul className="list-item">
           <li>meat
@@ -138,6 +169,7 @@ class ShoppingContainer extends Component {
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
+          contentLabel={this.state.selectedItem}
         >
           <p>{this.state.selectedItem}</p>
           <button onClick={this.decrease}>-</button>
@@ -152,4 +184,10 @@ class ShoppingContainer extends Component {
   }
 }
 
-export default ShoppingContainer
+function mapStateToProps(state) {
+  return {
+    store: state.store
+  }
+}
+
+export default connect(mapStateToProps, { saveStorage , fetchStorage })(ShoppingContainer)
