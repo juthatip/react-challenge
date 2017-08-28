@@ -104,17 +104,22 @@ class ShoppingContainer extends Component {
   handleSubmitBuyItem = () => {
     const sumMoney = this.state.currentMoney - this.state.totalMoney
 
-    this.storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
+    // this.storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
+
+    // if(this.storeItem[this.state.selectedItem] !== this.state.selectedItem) {
+    //   this.storeItem.push({[this.state.selectedItem]: this.state.numItem})
+    // }
 
     this.setState({ currentMoney: sumMoney ,modalIsOpen: false }, () => {
 
       this.data = {
-        currentMoney: this.state.currentMoney,
-        storeItem: this.storeItem
+        currentMoney: this.state.currentMoney
       }
 
       this.props.saveStorage(this.data)
     })
+
+    console.log("==>", this.storeItem)
 
   }
 
@@ -127,12 +132,6 @@ class ShoppingContainer extends Component {
     this.setState({modalIsOpen: false});
   }
 
-  renderMoney() {
-    if(!this.props.store) return
-
-    return <ShowMoney money={this.props.store} />
-  }
-
   render() {
 
     const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
@@ -143,8 +142,6 @@ class ShoppingContainer extends Component {
       <div>
 
       <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.storeItem} />
-
-      
 
         <ul className="list-item">
           <li>meat

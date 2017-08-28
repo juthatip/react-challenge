@@ -9,8 +9,9 @@ export function saveStorage(props) {
     } 
 }
 
-export function fetchStorage(props = 10000) {
-    console.log("fetchStor ==>", props)
+export function fetchStorage(props) {
+    props = props || 10000
+    // console.log("fetchStor ==>", props)
 
     return dispatch => {
         dispatch({type: FETCH_STORE, payload: props })
