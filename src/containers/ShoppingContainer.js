@@ -31,10 +31,10 @@ class ShoppingContainer extends Component {
       stateOperation: '',
       msgWarn: false,
       modalIsOpen: false,
-      storeItem: {}
     }
 
     this.data = {}
+    this.storeItem = []
 
     props.fetchStorage(this.props.store)
   }
@@ -104,18 +104,15 @@ class ShoppingContainer extends Component {
   handleSubmitBuyItem = () => {
     const sumMoney = this.state.currentMoney - this.state.totalMoney
 
-    let storeItem = []
+    this.storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
 
-    storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
-
-    this.setState({ currentMoney: sumMoney, storeItem: storeItem ,modalIsOpen: false }, () => {
+    this.setState({ currentMoney: sumMoney ,modalIsOpen: false }, () => {
 
       this.data = {
         currentMoney: this.state.currentMoney,
-        storeItem: this.state.storeItem
+        storeItem: this.storeItem
       }
 
-      // console.log("==>" ,this.state.storeItem)
       this.props.saveStorage(this.data)
     })
 
@@ -140,14 +137,14 @@ class ShoppingContainer extends Component {
 
     const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
 
-    console.log("this.props.store==>", this.props.store)
-
-    
+    console.log("storeItem===>", this.props.store)  
 
     return (
       <div>
 
-      <ShowMoney money={this.props.store.currentMoney} selectedItem={this.props.store.storeItem} />
+      <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.storeItem} />
+
+      
 
         <ul className="list-item">
           <li>meat

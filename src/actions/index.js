@@ -11,11 +11,6 @@ export function saveStorage(props) {
 
 export function fetchStorage(props = 10000) {
     console.log("fetchStor ==>", props)
-    // const request = {
-    //     money: props
-    // }
-
-    
 
     return dispatch => {
         dispatch({type: FETCH_STORE, payload: props })
