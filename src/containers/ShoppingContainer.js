@@ -34,7 +34,7 @@ class ShoppingContainer extends Component {
     }
 
     this.data = {}
-    this.storeItem = []
+    this.storeItem = {}
 
     props.fetchStorage(this.props.store)
   }
@@ -104,23 +104,34 @@ class ShoppingContainer extends Component {
   handleSubmitBuyItem = () => {
     const sumMoney = this.state.currentMoney - this.state.totalMoney
 
-    // this.storeItem.push({selectedItem: this.state.selectedItem, numItem: this.state.numItem})
-
-    // if(this.storeItem[this.state.selectedItem] !== this.state.selectedItem) {
-    //   this.storeItem.push({[this.state.selectedItem]: this.state.numItem})
+    // this.storeItem = {
+    //   [this.state.selectedItem]: this.state.numItem
     // }
+
+    if (this.props.store.selectedItem && this.props.store.selectedItem.hasOwnProperty(this.state.selectedItem)) {
+      this.storeItem[this.state.selectedItem] =  this.props.store.selectedItem[this.state.selectedItem] + this.state.numItem
+    } else {
+      this.storeItem[this.state.selectedItem] = this.state.numItem
+    }
+
+    // let newStoreItems = {}
+    // if(this.props.store.selectedItem) {
+    //   newStoreItems = Object.assign({}, this.props.store.selectedItem, { [this.state.selectedItem] : newItems })
+    // } else {
+    //   newStoreItems = {[this.state.selectedItem] : newItems }
+    // }
+        
 
     this.setState({ currentMoney: sumMoney ,modalIsOpen: false }, () => {
 
       this.data = {
-        currentMoney: this.state.currentMoney
+        currentMoney: this.state.currentMoney,
+        selectedItem: this.storeItem
       }
-
+     
       this.props.saveStorage(this.data)
     })
-
-    console.log("==>", this.storeItem)
-
+     
   }
 
   afterOpenModal = () => {
@@ -141,7 +152,7 @@ class ShoppingContainer extends Component {
     return (
       <div>
 
-      <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.storeItem} />
+      <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.selectedItem} />
 
         <ul className="list-item">
           <li>meat

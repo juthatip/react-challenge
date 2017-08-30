@@ -6,6 +6,7 @@ export default function(state = '', action) {
         case FETCH_STORE:   
             return Object.assign({}, state, { currentMoney: action.payload } )
         case SAVE_STORE:
+
             return Object.assign({}, state, action.payload )
         default:
             return state

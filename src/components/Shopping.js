@@ -2,14 +2,16 @@ import React from 'react'
 
 export default ({currentMoney, storeItem}) => {
 
-    let items = !storeItem ? [] : storeItem 
+    let items = !storeItem ? [] : storeItem
     
-    console.log(items)
+    console.log(storeItem)
     return (
         <div>
            <h1>$ {currentMoney}</h1>
            <ul>
-            {items.map((item, n)  => <li key={n}>{item.selectedItem} : {item.numItem}</li>)}
+            <li>meat : { items.meat }</li>
+            <li>water : { items.water }</li>
+            <li>candy : { items.candy }</li>
            </ul>
         </div>
     )
