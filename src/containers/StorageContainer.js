@@ -9,8 +9,6 @@ class StorageContainer extends Component {
     }
 
     render() {
-            console.log("this.props.store==>", this.props.store)
-
         return (
             <div>
                 storage
