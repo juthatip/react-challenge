@@ -102,6 +102,7 @@ class ShoppingContainer extends Component {
   }
 
   handleSubmitBuyItem = () => {
+
     const sumMoney = this.state.currentMoney - this.state.totalMoney
 
     // this.storeItem = {
@@ -123,7 +124,7 @@ class ShoppingContainer extends Component {
         
 
     this.setState({ currentMoney: sumMoney ,modalIsOpen: false }, () => {
-
+      
       this.data = {
         currentMoney: this.state.currentMoney,
         selectedItem: this.storeItem
@@ -143,12 +144,13 @@ class ShoppingContainer extends Component {
     this.setState({modalIsOpen: false});
   }
 
+  
+
   render() {
 
     const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
-
-    console.log("storeItem===>", this.props.store)  
-
+    const disabled = (this.state.numItem > 0) ? false : true
+console.log(this.props.store)
     return (
       <div>
 
@@ -182,7 +184,7 @@ class ShoppingContainer extends Component {
           <button onClick={this.increase}>+</button> 
           <p>{msgWarn}</p>
           <button onClick={this.closeModal}>cancel</button>
-          <button onClick={this.handleSubmitBuyItem}>OK</button>
+          <button  disabled={disabled} onClick={this.handleSubmitBuyItem}>OK</button>
         </Modal>
       </div>
     )

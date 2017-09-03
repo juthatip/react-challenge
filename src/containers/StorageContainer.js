@@ -14,7 +14,7 @@ class StorageContainer extends Component {
         return (
             <div>
                 storage
-                <ShowMoney money={this.props.store} />
+                <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.selectedItem} />
             </div>
         )
     }
@@ -22,7 +22,7 @@ class StorageContainer extends Component {
 
 function mapStateToProps(state) {
     return {
-        store: state.store.money
+        store: state.store
     }
 }
 
