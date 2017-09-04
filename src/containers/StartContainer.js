@@ -1,50 +1,55 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { saveMonster } from '../actions'
 
 class StartContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.monster = [
-      {
-        name: "monster01",
-        status: {
-          hp: 100,
-          mp: 100,
-          str: 100,
-          vit: 100,
-          agi: 100,
-          dex: 100,
-          luck: 0,
-          extraElement: ""
-        }
-      },
-      {
-        name: "monster02",
-        status: {
-          hp: 200,
-          mp: 200,
-          str: 200,
-          vit: 200,
-          agi: 200,
-          dex: 200,
-          luck: 0,
-          extraElement: ""
-        }
-      },
-      {
-        name: "monster03",
-        status: {
-          hp: 300,
-          mp: 300,
-          str: 300,
-          vit: 300,
-          agi: 300,
-          dex: 300,
-          luck: 0,
-          extraElement: ""
-        }
-      },
-    ]
+    // this.monster = [
+    //   {
+    //     name: "monster01",
+    //     status: {
+    //       hp: 100,
+    //       mp: 100,
+    //       str: 100,
+    //       vit: 100,
+    //       agi: 100,
+    //       dex: 100,
+    //       luck: 0,
+    //       extraElement: "",
+    //       stamina: 100
+    //     }
+    //   },
+    //   {
+    //     name: "monster02",
+    //     status: {
+    //       hp: 200,
+    //       mp: 200,
+    //       str: 200,
+    //       vit: 200,
+    //       agi: 200,
+    //       dex: 200,
+    //       luck: 0,
+    //       extraElement: "",
+    //       stamina: 100
+    //     }
+    //   },
+    //   {
+    //     name: "monster03",
+    //     status: {
+    //       hp: 300,
+    //       mp: 300,
+    //       str: 300,
+    //       vit: 300,
+    //       agi: 300,
+    //       dex: 300,
+    //       luck: 0,
+    //       extraElement: "",
+    //       stamina: 100
+    //     }
+    //   },
+    // ]
 
     this.element = {
       fire:  false,
@@ -98,7 +103,10 @@ class StartContainer extends Component {
     
     this.setState({
       player: player
+    }, () => {
+      this.props.saveMonster(this.state.player)
     })
+
 
   }
 
@@ -120,6 +128,7 @@ class StartContainer extends Component {
         <p>AGI: {this.state.player.status.agi}</p>
         <p>DEX: {this.state.player.status.dex}</p>
         <p>LUCK: {this.state.player.status.luck}</p>
+        <p>Stamina: {this.state.player.status.stamina}</p>
       </div>
     )
   }
@@ -139,4 +148,4 @@ class StartContainer extends Component {
   }
 }
 
-export default StartContainer
+export default connect(null, { saveMonster })(StartContainer)

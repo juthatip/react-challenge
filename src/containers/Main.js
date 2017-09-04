@@ -5,6 +5,7 @@ import Nav from '../components/Layout/Nav'
 import Shopping from './ShoppingContainer'
 import StartContainer from './StartContainer'
 import StorageContainer from './StorageContainer'
+import TrainingContainer from './TrainingContainer'
 
 class Main extends Component {
   render() {
@@ -15,6 +16,7 @@ class Main extends Component {
           <Route path="/start" component={StartContainer} />
           <Route path="/shop" component={Shopping} />
           <Route path="/storage" component={StorageContainer} />
+          <Route path="/training" component={TrainingContainer} />
         </Switch>
       </div>
     )

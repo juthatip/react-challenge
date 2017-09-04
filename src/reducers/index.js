@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import storeReducer from './StoreReducer'
+import StoreReducer from './StoreReducer'
+import MonsterReducer from './MonsterReducer'
 
 const rootReducer = combineReducers({
-    store: storeReducer
+    store: StoreReducer,
+    monster: MonsterReducer
 });
 
 export default rootReducer;
