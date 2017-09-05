@@ -1,55 +1,55 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { saveMonster } from '../actions'
+import { saveMonster, fetchMonster } from '../actions'
 
 class StartContainer extends Component {
   constructor(props) {
     super(props)
 
-    // this.monster = [
-    //   {
-    //     name: "monster01",
-    //     status: {
-    //       hp: 100,
-    //       mp: 100,
-    //       str: 100,
-    //       vit: 100,
-    //       agi: 100,
-    //       dex: 100,
-    //       luck: 0,
-    //       extraElement: "",
-    //       stamina: 100
-    //     }
-    //   },
-    //   {
-    //     name: "monster02",
-    //     status: {
-    //       hp: 200,
-    //       mp: 200,
-    //       str: 200,
-    //       vit: 200,
-    //       agi: 200,
-    //       dex: 200,
-    //       luck: 0,
-    //       extraElement: "",
-    //       stamina: 100
-    //     }
-    //   },
-    //   {
-    //     name: "monster03",
-    //     status: {
-    //       hp: 300,
-    //       mp: 300,
-    //       str: 300,
-    //       vit: 300,
-    //       agi: 300,
-    //       dex: 300,
-    //       luck: 0,
-    //       extraElement: "",
-    //       stamina: 100
-    //     }
-    //   },
-    // ]
+    this.monster = [
+      {
+        name: "monster01",
+        status: {
+          hp: 100,
+          mp: 100,
+          str: 100,
+          vit: 100,
+          agi: 100,
+          dex: 100,
+          luck: 0,
+          extraElement: "",
+          stamina: 100
+        }
+      },
+      {
+        name: "monster02",
+        status: {
+          hp: 200,
+          mp: 200,
+          str: 200,
+          vit: 200,
+          agi: 200,
+          dex: 200,
+          luck: 0,
+          extraElement: "",
+          stamina: 100
+        }
+      },
+      {
+        name: "monster03",
+        status: {
+          hp: 300,
+          mp: 300,
+          str: 300,
+          vit: 300,
+          agi: 300,
+          dex: 300,
+          luck: 0,
+          extraElement: "",
+          stamina: 100
+        }
+      },
+    ]
 
     this.element = {
       fire:  false,
@@ -105,6 +105,7 @@ class StartContainer extends Component {
       player: player
     }, () => {
       this.props.saveMonster(this.state.player)
+      this.props.fetchMonster(this.state.player)
     })
 
 
@@ -116,19 +117,19 @@ class StartContainer extends Component {
   }
 
   renderPlayerStatus() {
-    if(Object.keys(this.state.player.status).length === 0) return
-    
+    if(!this.props.monster.status) return
+
     return (
       <div>
-        <p>Element: {this.state.player.status.extraElement}</p>
-        <p>HP: {this.state.player.status.hp}</p>
-        <p>MP: {this.state.player.status.mp}</p>
-        <p>STR: {this.state.player.status.str}</p>
-        <p>VIT: {this.state.player.status.vit}</p>
-        <p>AGI: {this.state.player.status.agi}</p>
-        <p>DEX: {this.state.player.status.dex}</p>
-        <p>LUCK: {this.state.player.status.luck}</p>
-        <p>Stamina: {this.state.player.status.stamina}</p>
+        <p>HP: {this.props.monster.status.hp}</p>
+        <p>MP: {this.props.monster.status.mp}</p>
+        <p>STR: {this.props.monster.status.str}</p>
+        <p>VIT: {this.props.monster.status.vit}</p>
+        <p>AGI: {this.props.monster.status.agi}</p>
+        <p>DEX: {this.props.monster.status.dex}</p>
+        <p>LUCK: {this.props.monster.status.luck}</p>
+        <p>Stamina: {this.props.monster.status.stamina}</p>
+        <p>Extra Element:  {this.props.monster.status.extraElement}</p>
       </div>
     )
   }
@@ -140,7 +141,7 @@ class StartContainer extends Component {
           <h2>Monster Summoner</h2>
         </div>
         <h1>Choose your Monster</h1>
-        <p>{this.state.player.name}</p>
+        <p>{this.props.monster.name}</p>
         {this.renderPlayerStatus()}
         <a onClick={this.randomMonster} className="btn">Random</a>
       </div>
@@ -148,4 +149,10 @@ class StartContainer extends Component {
   }
 }
 
-export default connect(null, { saveMonster })(StartContainer)
+function mapStateToProps(state) {
+  return {
+    monster: state.monster
+  }
+}
+
+export default connect(mapStateToProps, { saveMonster, fetchMonster })(StartContainer)
