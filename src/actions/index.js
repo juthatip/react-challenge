@@ -24,51 +24,8 @@ export function saveMonster(props) {
   }
 }
 
-export function fetchMonster() {
-  const props = [
-    {
-      name: "monster01",
-      status: {
-        hp: 100,
-        mp: 100,
-        str: 100,
-        vit: 100,
-        agi: 100,
-        dex: 100,
-        luck: 0,
-        extraElement: "",
-        stamina: 100
-      }
-    },
-    {
-      name: "monster02",
-      status: {
-        hp: 200,
-        mp: 200,
-        str: 200,
-        vit: 200,
-        agi: 200,
-        dex: 200,
-        luck: 0,
-        extraElement: "",
-        stamina: 100
-      }
-    },
-    {
-      name: "monster03",
-      status: {
-        hp: 300,
-        mp: 300,
-        str: 300,
-        vit: 300,
-        agi: 300,
-        dex: 300,
-        luck: 0,
-        extraElement: "",
-        stamina: 100
-      }
-    },
-  ]
+export function fetchMonster(monster) {
+  const props = monster
 
   return dispatch => {
     dispatch({type: FETCH_MONSTER, payload: props})
@@ -78,12 +35,28 @@ export function fetchMonster() {
 
 export function saveTrainingStatus(status, monster) {
 
+  if(monster.status.stamina > 0) {
+
+    if (status === 'run') {
+      monster.status.agi += 5
+    } else if (status === 'carry') {
+      monster.status.str += 5
+    } else if (status === 'swim') {
+      monster.status.hp += 20
+    }
+    
+    monster.status.stamina -= 20 
+  }
+
+
+  console.log(monster)
+
   // agi = 5, str = 5, hp = 20
 
   // monster + status
 
 
-  // return dispatch => {
-  //   dispatch({type: SAVE_TRAINING_STATUS, payload: props })
-  // }
+  return dispatch => {
+    dispatch({type: SAVE_TRAINING_STATUS })
+  }
 }
