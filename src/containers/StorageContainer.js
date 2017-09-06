@@ -9,6 +9,8 @@ class StorageContainer extends Component {
     }
 
     render() {
+
+        console.log(this.props.store.selectedItem)
         return (
             <div>
                 storage

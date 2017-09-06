@@ -150,11 +150,13 @@ class ShoppingContainer extends Component {
 
     const msgWarn = (this.state.msgWarn) ? 'Not Enough Money' : ''
     const disabled = (this.state.numItem > 0) ? false : true
-console.log(this.props.store)
+    console.log(this.props.store)
     return (
       <div>
 
-      <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.selectedItem} />
+      $ {this.props.store.currentMoney}
+
+      {/* <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.selectedItem} /> */}
 
         <ul className="list-item">
           <li>meat
