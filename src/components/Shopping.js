@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({currentMoney, storeItem}) => {
+export default ({currentMoney, storeItem, handleMeat}) => {
 
     let items = !storeItem ? [] : storeItem
 
@@ -8,9 +8,9 @@ export default ({currentMoney, storeItem}) => {
         <div>
            <h1>$ {currentMoney}</h1>
            <ul>
-            { items.meat ?  <li>meat : {items.meat}</li> : '' }
+            { items.meat ? <div><li>meat : {items.meat}</li><button onClick={handleMeat}>use (+50 stamina)</button></div> : '' }
             { items.water ? <li>water : {items.water}</li> : '' }
-            { items.candy ? <li>candy : {items.candy}</li> : '' }
+            { items.candy ? <li>candy : {items.candy}</li> : '' } 
            </ul>
         </div>
     )

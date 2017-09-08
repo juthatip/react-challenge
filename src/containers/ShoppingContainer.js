@@ -24,7 +24,6 @@ class ShoppingContainer extends Component {
 
     this.state = {
       totalMoney: '',
-      currentMoney: 10000,
       totalPrice: 0,
       numItem: 0,
       selectedItem: '',
@@ -103,7 +102,7 @@ class ShoppingContainer extends Component {
 
   handleSubmitBuyItem = () => {
 
-    const sumMoney = this.state.currentMoney - this.state.totalMoney
+    const sumMoney = this.props.store.currentMoney - this.state.totalMoney
 
     // this.storeItem = {
     //   [this.state.selectedItem]: this.state.numItem

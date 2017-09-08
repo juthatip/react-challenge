@@ -5,6 +5,7 @@ export const SAVE_MONSTER = 'SAVE_MONSTER'
 export const FETCH_MONSTER = 'FETCH_MONSTER'
 
 export function saveStorage(props) {
+  console.log(props)
     return dispatch => {
         dispatch({ type: SAVE_STORE, payload: props})
     } 
@@ -25,6 +26,7 @@ export function saveMonster(props) {
 }
 
 export function fetchMonster(monster) {
+  console.log(monster)
   const props = monster
 
   return dispatch => {

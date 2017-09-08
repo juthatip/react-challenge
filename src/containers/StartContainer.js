@@ -18,7 +18,7 @@ class StartContainer extends Component {
           dex: 100,
           luck: 0,
           extraElement: "",
-          stamina: 100
+          stamina: 50
         }
       },
       {
@@ -32,7 +32,7 @@ class StartContainer extends Component {
           dex: 200,
           luck: 0,
           extraElement: "",
-          stamina: 100
+          stamina: 80
         }
       },
       {
@@ -46,7 +46,7 @@ class StartContainer extends Component {
           dex: 300,
           luck: 0,
           extraElement: "",
-          stamina: 100
+          stamina: 0
         }
       },
     ]
