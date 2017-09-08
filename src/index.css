@@ -8,3 +8,12 @@ body {
   float: left;
   width: 25%;
 }
+
+.show {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
+}

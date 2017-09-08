@@ -62,7 +62,8 @@ class StartContainer extends Component {
       player: {
         name: '',
         status: {}
-      }
+      },
+      close: false
     }
 
   }
@@ -102,7 +103,8 @@ class StartContainer extends Component {
 
     
     this.setState({
-      player: player
+      player: player,
+      close: true
     }, () => {
       this.props.saveMonster(this.state.player)
       this.props.fetchMonster(this.state.player)
@@ -135,16 +137,17 @@ class StartContainer extends Component {
   }
       
   render() {
-    console.log(this.props.monster)
+    const classes = this.state.close ? 'hide' : 'show'
+
     return (
       <div className="App">
         <div className="App-header">
           <h2>Monster Summoner</h2>
         </div>
-        <h1>Choose your Monster</h1>
+        { !this.state.close ? <h1>Choose your Monster</h1> : '' }
         <p>{this.props.monster.name}</p>
         {this.renderPlayerStatus()}
-        <a onClick={this.randomMonster} className="btn">Random</a>
+        <a onClick={this.randomMonster} className={`btn ${classes}`}>Random</a>
       </div>
     );
   }
