@@ -141,11 +141,9 @@ class ShoppingContainer extends Component {
     this.setState({modalIsOpen: false});
 
     if(this.state.msgWarn) {
-      this.setState({msgWarn: true})
+      this.setState({msgWarn: false})
     }
   }
-
-  // const disabled =
   
 
   render() {
