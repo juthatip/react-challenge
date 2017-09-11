@@ -77,7 +77,10 @@ class ShoppingContainer extends Component {
     let numItem = this.state.numItem
     let stateOperation = this.state.stateOperation
     let totalPrice = this.state.totalPrice;
-    let currentMoney = this.state.currentMoney;
+    let currentMoney = this.props.store.currentMoney;
+
+    console.log(currentMoney)
+    // console.log(this.props.store.currentMoney)
    
     if(selectedItem === 'meat') {
       price = 2500
@@ -104,23 +107,18 @@ class ShoppingContainer extends Component {
 
     const sumMoney = this.props.store.currentMoney - this.state.totalMoney
 
+
     // this.storeItem = {
     //   [this.state.selectedItem]: this.state.numItem
     // }
 
     if (this.props.store.selectedItem && this.props.store.selectedItem.hasOwnProperty(this.state.selectedItem)) {
-      this.storeItem[this.state.selectedItem] =  this.props.store.selectedItem[this.state.selectedItem] + this.state.numItem
+      this.storeItem = Object.assign({}, this.props.store.selectedItem, { [this.state.selectedItem] : this.props.store.selectedItem[this.state.selectedItem] + this.state.numItem } )
     } else {
       this.storeItem[this.state.selectedItem] = this.state.numItem
     }
 
-    // let newStoreItems = {}
-    // if(this.props.store.selectedItem) {
-    //   newStoreItems = Object.assign({}, this.props.store.selectedItem, { [this.state.selectedItem] : newItems })
-    // } else {
-    //   newStoreItems = {[this.state.selectedItem] : newItems }
-    // }
-        
+
 
     this.setState({ currentMoney: sumMoney ,modalIsOpen: false }, () => {
       
@@ -141,8 +139,13 @@ class ShoppingContainer extends Component {
 
   closeModal = () => {
     this.setState({modalIsOpen: false});
+
+    if(this.state.msgWarn) {
+      this.setState({msgWarn: true})
+    }
   }
 
+  // const disabled =
   
 
   render() {
@@ -182,10 +185,12 @@ class ShoppingContainer extends Component {
           <p>{this.state.selectedItem}</p>
           <button onClick={this.decrease}>-</button>
           &nbsp;{this.state.numItem}&nbsp;
-          <button onClick={this.increase}>+</button> 
+          <button onClick={this.increase}>+</button>
+          <p>
+            <button onClick={this.closeModal}>cancel</button>
+            <button  disabled={disabled} onClick={this.handleSubmitBuyItem}>OK</button>
+          </p>
           <p>{msgWarn}</p>
-          <button onClick={this.closeModal}>cancel</button>
-          <button  disabled={disabled} onClick={this.handleSubmitBuyItem}>OK</button>
         </Modal>
       </div>
     )

@@ -6,6 +6,7 @@ export const FETCH_MONSTER = 'FETCH_MONSTER'
 
 export function saveStorage(props) {
   console.log(props)
+
     return dispatch => {
         dispatch({ type: SAVE_STORE, payload: props})
     } 
@@ -50,13 +51,7 @@ export function saveTrainingStatus(status, monster) {
     monster.status.stamina -= 20 
   }
 
-
   console.log(monster)
-
-  // agi = 5, str = 5, hp = 20
-
-  // monster + status
-
 
   return dispatch => {
     dispatch({type: SAVE_TRAINING_STATUS })
