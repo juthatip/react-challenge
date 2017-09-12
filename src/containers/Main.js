@@ -3,6 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom'
 import Nav from '../components/Layout/Nav'
 
 import Shopping from './ShoppingContainer'
+import EnemyContainer from './EnemyContainer'
 import StartContainer from './StartContainer'
 import StorageContainer from './StorageContainer'
 import TrainingContainer from './TrainingContainer'
@@ -14,6 +15,7 @@ class Main extends Component {
         <Nav />
         <Switch>
           <Route path="/start" component={StartContainer} />
+          <Route path="/enemy" component={EnemyContainer} />
           <Route path="/shop" component={Shopping} />
           <Route path="/storage" component={StorageContainer} />
           <Route path="/training" component={TrainingContainer} />
