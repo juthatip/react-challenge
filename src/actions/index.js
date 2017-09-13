@@ -70,10 +70,10 @@ export function saveEnemy(enemy) {
   
 } 
 
-export function fetchEnemy() {
+export function fetchEnemy(enemy) {
 
   return dispatch => {
-    dispatch({type: FETCH_ENEMY})
+    dispatch({type: FETCH_ENEMY, payload: enemy})
   }
 }
 

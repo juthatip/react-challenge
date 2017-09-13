@@ -2,6 +2,39 @@ import React , { Component } from 'react'
 import { saveEnemy, fetchEnemy, clearEnemy } from '../actions'
 import { connect } from 'react-redux'
 
+
+const Row = ({data}) => {
+    return (
+        <div>
+           {/* <li>HP: {data.hp}</li>
+           <li>Attack: {data.attack}</li>
+           <li>Element: {data.element}</li> */}
+           {data.map((i, k)=> {
+               return(
+                <ul>
+                    <Col key={k} data={i} index={k}/>
+                </ul>
+               )
+            })}
+            <button>Fight!</button>
+            <br />
+        </div>
+    )
+}
+
+const Col = ({data, index}) => {
+    console.log(index)
+    return (
+        <div>
+            <li>
+                <span>HP: {data.hp}</span>
+                <span>Attack: {data.attack}</span>
+                <span>Element: {data.element}</span>
+            </li>
+        </div>
+    )
+}
+
 class EnemyConainer extends Component {
     constructor(props) {
         super(props)
@@ -16,39 +49,76 @@ class EnemyConainer extends Component {
             element: ['fire', 'water', 'wind', 'earth'],
             numberOfenemy: [1,2,3]
         }
-        props.clearEnemy()
+        // props.fetchEnemy()
     }
 
     renderEnemy = () => {
-        //number of enemy
-        const numberOfenemy = this.randomItem(this.state.numberOfenemy)
 
-        let enemy = []
+        let level = []
+        let gen
 
-        if(numberOfenemy) {
-            for (var i = 1; i <= numberOfenemy; i++) {
-                let hp = this.randomItem(this.state.hp)
-                let attack = this.randomItem(this.state.attack)
-                let element = this.randomItem(this.state.element)
-                enemy.push({hp: hp, attack: attack, element: element})
-            }
+        for(var n = 1; n <= 4; n++) {
+            gen = this.generateEnemy()
+            level.push(gen)
         }
 
-        this.props.saveEnemy(enemy)
+        console.log("===>", level)
 
-        console.log(enemy)
-    } 
+        this.props.saveEnemy(level)
+
+    }
+
+    generateEnemy = () => {
+        const numberOfenemy = this.randomItem(this.state.numberOfenemy)
+        let enemy = []        
+
+        for (var i = 1; i <= numberOfenemy; i++) {
+            let hp = this.randomItem(this.state.hp)
+            let attack = this.randomItem(this.state.attack)
+            let element = this.randomItem(this.state.element)
+            enemy.push({hp: hp, attack: attack, element: element})
+        }
+
+        // console.log("==>", enemy)
+
+        return enemy
+        
+    }
 
     randomItem(items) {
         const item = items[Math.floor(Math.random()*items.length)]
         return item
     }
 
+    renderAllEnemy() {
+        // if(this.props.enemy) {
+        //     return this.props.enemy.map((i, k) => {
+        //         return ( 
+        //             i.map((e) =>  {
+        //                 return (<p key={k}>{e.hp}</p>)
+        //             })
+        //         )
+        //     })
+        // }
+    }
+
+
     render() {
-        console.log("this.props ==>", this.props.enemy)
+        const enemy = this.props.enemy ? this.props.enemy : []
+
+        console.log(enemy)
         return (
             <div>
                 <button onClick={this.renderEnemy} >Random Enemy</button>
+                {/* {this.renderAllEnemy()} */}
+                { enemy.map((i, k) => {
+                    return (
+                        <div key={k}>
+                            <Row key={k} data={i} />
+                        </div>
+                    )
+                })}
+
             </div>
         )
     }
