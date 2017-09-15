@@ -11,8 +11,8 @@ const Row = ({data}) => {
            <li>Element: {data.element}</li> */}
            {data.map((i, k)=> {
                return(
-                <ul>
-                    <Col key={k} data={i} index={k}/>
+                <ul key={k}>
+                    <Col data={i} index={k}/>
                 </ul>
                )
             })}
@@ -23,7 +23,6 @@ const Row = ({data}) => {
 }
 
 const Col = ({data, index}) => {
-    console.log(index)
     return (
         <div>
             <li>
@@ -114,7 +113,7 @@ class EnemyConainer extends Component {
                 { enemy.map((i, k) => {
                     return (
                         <div key={k}>
-                            <Row key={k} data={i} />
+                            <Row data={i} />
                         </div>
                     )
                 })}
