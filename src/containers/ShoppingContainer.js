@@ -79,7 +79,7 @@ class ShoppingContainer extends Component {
     let totalPrice = this.state.totalPrice;
     let currentMoney = this.props.store.currentMoney;
 
-    console.log(currentMoney)
+    // console.log(currentMoney)
     // console.log(this.props.store.currentMoney)
    
     if(selectedItem === 'meat') {

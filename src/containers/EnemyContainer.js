@@ -1,38 +1,7 @@
 import React , { Component } from 'react'
-import { saveEnemy, fetchEnemy, clearEnemy } from '../actions'
+import { saveEnemy, fetchEnemy, clearEnemy, saveBattle } from '../actions'
 import { connect } from 'react-redux'
-
-
-const Row = ({data}) => {
-    return (
-        <div>
-           {/* <li>HP: {data.hp}</li>
-           <li>Attack: {data.attack}</li>
-           <li>Element: {data.element}</li> */}
-           {data.map((i, k)=> {
-               return(
-                <ul key={k}>
-                    <Col data={i} index={k}/>
-                </ul>
-               )
-            })}
-            <button>Fight!</button>
-            <br />
-        </div>
-    )
-}
-
-const Col = ({data, index}) => {
-    return (
-        <div>
-            <li>
-                <span>HP: {data.hp}</span>
-                <span>Attack: {data.attack}</span>
-                <span>Element: {data.element}</span>
-            </li>
-        </div>
-    )
-}
+import Row from '../components/Enemy/Row'
 
 class EnemyConainer extends Component {
     constructor(props) {
@@ -48,7 +17,6 @@ class EnemyConainer extends Component {
             element: ['fire', 'water', 'wind', 'earth'],
             numberOfenemy: [1,2,3]
         }
-        // props.fetchEnemy()
     }
 
     renderEnemy = () => {
@@ -78,8 +46,6 @@ class EnemyConainer extends Component {
             enemy.push({hp: hp, attack: attack, element: element})
         }
 
-        // console.log("==>", enemy)
-
         return enemy
         
     }
@@ -89,23 +55,14 @@ class EnemyConainer extends Component {
         return item
     }
 
-    renderAllEnemy() {
-        // if(this.props.enemy) {
-        //     return this.props.enemy.map((i, k) => {
-        //         return ( 
-        //             i.map((e) =>  {
-        //                 return (<p key={k}>{e.hp}</p>)
-        //             })
-        //         )
-        //     })
-        // }
+    handleFight = () => {
+        console.log(1111)
     }
-
 
     render() {
         const enemy = this.props.enemy ? this.props.enemy : []
 
-        console.log(enemy)
+        // console.log(enemy)
         return (
             <div>
                 <button onClick={this.renderEnemy} >Random Enemy</button>
@@ -113,7 +70,7 @@ class EnemyConainer extends Component {
                 { enemy.map((i, k) => {
                     return (
                         <div key={k}>
-                            <Row data={i} />
+                            <Row data={i} handleFight={this.handleFight} />
                         </div>
                     )
                 })}
@@ -125,7 +82,8 @@ class EnemyConainer extends Component {
 
 function mapStateToProps (state) {
     return {
-        enemy: state.enemy
+        enemy: state.enemy,
+        battle: state.battle
     }
 }
 

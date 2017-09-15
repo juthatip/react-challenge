@@ -6,6 +6,7 @@ export const FETCH_MONSTER = 'FETCH_MONSTER'
 export const SAVE_ENEMY = 'SAVE_ENEMY'
 export const FETCH_ENEMY = 'FETCH_ENEMY'
 export const CLEAR_ENEMY = 'CLEAR_ENEMY'
+export const SAVE_BATTLE = 'SAVE_BATTLE'
 
 export function saveStorage(props) {
   // console.log(props)
@@ -81,5 +82,12 @@ export function clearEnemy() {
 
   return dispatch => {
     dispatch({type: CLEAR_ENEMY})
+  }
+}
+
+export function saveBattle(status) {
+  
+  return dispatch => {
+    dispatch({type: SAVE_BATTLE, payload: status})
   }
 }
