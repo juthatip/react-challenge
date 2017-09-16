@@ -1,7 +1,9 @@
 import React from 'react'
 import Col from './Col'
 
-export default ({data, handleFight}) => {
+export default ({data, handleFight, battle, index}) => {
+  const className = battle[index].isBattle ? 'hide' : 'show'
+
   return(
     <div>
         {data.map((i, k)=> {
@@ -11,7 +13,7 @@ export default ({data, handleFight}) => {
             </ul>
             )
         })}
-        <button onClick={handleFight}>Fight!</button>
+        <button className={className} onClick={handleFight} value={index}>Fight!</button>
         <br />
     </div>
   )

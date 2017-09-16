@@ -86,7 +86,9 @@ export function clearEnemy() {
 }
 
 export function saveBattle(status) {
-  
+
+  console.log(status)
+
   return dispatch => {
     dispatch({type: SAVE_BATTLE, payload: status})
   }

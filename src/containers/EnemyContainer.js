@@ -15,8 +15,13 @@ class EnemyConainer extends Component {
             hp: ['50', '100', '200', '300'],
             attack: ['5','10','20','50'],
             element: ['fire', 'water', 'wind', 'earth'],
-            numberOfenemy: [1,2,3]
+            numberOfenemy: [1,2,3],
+            battle: [{btn: 1, isBattle: false}, {btn: 2, isBattle: false}, {btn: 3, isBattle: false}, {btn: 4, isBattle: false}],
+            win: [false, false, false],
+            battleRound: [{ round: 1, win: false }, { round: 2, win: false},{round: 3, win: false}],
+            round: 0
         }
+
     }
 
     renderEnemy = () => {
@@ -29,9 +34,10 @@ class EnemyConainer extends Component {
             level.push(gen)
         }
 
-        console.log("===>", level)
-
         this.props.saveEnemy(level)
+        this.setState({round: this.state.round + 1}, () => {
+          this.handleLevel()
+        })
 
     }
 
@@ -50,31 +56,76 @@ class EnemyConainer extends Component {
         
     }
 
+    handleLevel() {
+      for(var x = 0; x < this.state.battleRound.length; x++) {
+
+        // if(this.state.battleRound[x].round === this.state.round) {
+        //   console.log("==>", this.state.battleRound[x].round)
+        // }
+
+        if(this.state.battleRound[x].round === 1) {
+
+        }
+
+      }
+    }
+
     randomItem(items) {
         const item = items[Math.floor(Math.random()*items.length)]
         return item
     }
 
-    handleFight = () => {
-        console.log(1111)
+    handleFight = (e) => {
+      // this.props.saveBattle(true)
+      let btn = this.state.battle
+      let round = this.state.battleRound
+
+      console.log(round)
+      btn[e.target.value].isBattle = true
+
+      this.setState({battle: btn})
+
+      let pass = this.handleBattleWinAll()
+
+      if(pass) {
+
+        console.log(round[this.state.round - 1])
+
+        round[this.state.round - 1].win = true
+
+        this.setState({battleRound: round}, ()=> {
+          this.props.clearEnemy()
+        })
+
+      }
+
+    }
+
+    handleBattleWinAll() {
+      let checkedAll = false
+
+      for(var i = 0; i < this.state.battle.length; i++) {
+        checkedAll =  this.state.battle[i].isBattle
+      }
+
+      return checkedAll
+
     }
 
     render() {
         const enemy = this.props.enemy ? this.props.enemy : []
 
-        // console.log(enemy)
+
+        console.log(this.props.enemy)
         return (
             <div>
                 <button onClick={this.renderEnemy} >Random Enemy</button>
                 {/* {this.renderAllEnemy()} */}
                 { enemy.map((i, k) => {
                     return (
-                        <div key={k}>
-                            <Row data={i} handleFight={this.handleFight} />
-                        </div>
+                      <Row data={i} handleFight={this.handleFight} battle={this.state.battle} key={k} index={k} />
                     )
                 })}
-
             </div>
         )
     }
@@ -87,4 +138,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps, { saveEnemy, fetchEnemy, clearEnemy })(EnemyConainer)
+export default connect(mapStateToProps, { saveEnemy, fetchEnemy, clearEnemy, saveBattle })(EnemyConainer)
