@@ -34,6 +34,10 @@ class EnemyConainer extends Component {
             level.push(gen)
         }
 
+        this.state.battle.forEach(( ele )=> {
+          ele.isBattle = false
+        })
+
         this.props.saveEnemy(level)
         this.setState({round: this.state.round + 1}, () => {
           this.handleLevel()
@@ -57,18 +61,35 @@ class EnemyConainer extends Component {
     }
 
     handleLevel() {
-      for(var x = 0; x < this.state.battleRound.length; x++) {
+      let battleRound = this.state.round
+      let hp = this.state.hp
+      let attack = this.state.attack
+      let upHp
+      let upAttack
 
-        // if(this.state.battleRound[x].round === this.state.round) {
-        //   console.log("==>", this.state.battleRound[x].round)
-        // }
 
-        if(this.state.battleRound[x].round === 1) {
-
-        }
-
+      if(battleRound === 2) {
+        upHp = this.handleUpgradeHpEnemy(hp, 2)
+        upAttack = this.handleUpgrageAttackEnemy(attack, 2)
+      } else if (battleRound === 3) {
+        upHp = this.handleUpgradeHpEnemy(hp, 3)
+        upAttack = this.handleUpgrageAttackEnemy(attack, 3)
+      } else {
+        upHp = hp
+        upAttack = attack
       }
+
+      this.setState({hp: upHp, attack: upAttack})
     }
+
+    handleUpgradeHpEnemy(hp, number) {
+      return hp.map(n => n*number)
+    }
+
+    handleUpgrageAttackEnemy(attack, number) {
+      return attack.map(n => n*number)
+    }
+
 
     randomItem(items) {
         const item = items[Math.floor(Math.random()*items.length)]
@@ -80,7 +101,6 @@ class EnemyConainer extends Component {
       let btn = this.state.battle
       let round = this.state.battleRound
 
-      console.log(round)
       btn[e.target.value].isBattle = true
 
       this.setState({battle: btn})
@@ -88,8 +108,6 @@ class EnemyConainer extends Component {
       let pass = this.handleBattleWinAll()
 
       if(pass) {
-
-        console.log(round[this.state.round - 1])
 
         round[this.state.round - 1].win = true
 
@@ -116,8 +134,10 @@ class EnemyConainer extends Component {
         const enemy = this.props.enemy ? this.props.enemy : []
 
 
-        console.log(this.props.enemy)
-        return (
+      // console.log(this.state.battle)
+      console.log("==>", this.state.hp)
+
+      return (
             <div>
                 <button onClick={this.renderEnemy} >Random Enemy</button>
                 {/* {this.renderAllEnemy()} */}
