@@ -15,9 +15,9 @@ class EnemyConainer extends Component {
             hp: ['50', '100', '200', '300'],
             attack: ['5','10','20','50'],
             element: ['fire', 'water', 'wind', 'earth'],
+            numberOfBoss: [1],
             numberOfenemy: [1,2,3],
-            battle: [{btn: 1, isBattle: false}, {btn: 2, isBattle: false}, {btn: 3, isBattle: false}, {btn: 4, isBattle: false}],
-            win: [false, false, false],
+            battle: [],
             battleRound: [{ round: 1, win: false }, { round: 2, win: false},{round: 3, win: false}],
             round: 0
         }
@@ -28,25 +28,49 @@ class EnemyConainer extends Component {
 
         let level = []
         let gen
+        let win = this.state.battleRound.map(w => w.win)
+        let result = win.every(e => e === true)
 
-        for(var n = 1; n <= 4; n++) {
-            gen = this.generateEnemy()
-            level.push(gen)
+        if(!result) {
+          let battle = []
+          for(var n = 1; n <= 4; n++) {
+              gen = this.generateEnemy(this.state.numberOfenemy)
+              level.push(gen)
+
+              // gen button
+              battle.push({btn: n, isBattle: false})
+          }
+
+          this.setState({battle: battle})
+          this.handleGenerateAllEnemy(level)
+
+          // console.log("boss", this.state.battle)
+
+        } else {
+          let boss = this.generateEnemy(this.state.numberOfBoss)
+              level.push(boss)
+          
+          this.setState({battle: [{btn: 1, isBattle: false}]})
+          this.handleGenerateAllEnemy(level)
+
+          // console.log("boss", this.state.battle)
         }
 
-        this.state.battle.forEach(( ele )=> {
-          ele.isBattle = false
-        })
-
-        this.props.saveEnemy(level)
-        this.setState({round: this.state.round + 1}, () => {
-          this.handleLevel()
-        })
 
     }
 
-    generateEnemy = () => {
-        const numberOfenemy = this.randomItem(this.state.numberOfenemy)
+    handleGenerateAllEnemy(level) {
+      this.props.saveEnemy(level)
+      this.state.battle.forEach((ele)=> {
+        ele.isBattle = false
+      })
+      this.setState({round: this.state.round + 1}, () => {
+        this.handleLevel()
+      })
+    }
+    
+    generateEnemy = (n) => {
+        const numberOfenemy = this.randomItem(n)
         let enemy = []        
 
         for (var i = 1; i <= numberOfenemy; i++) {
@@ -67,6 +91,7 @@ class EnemyConainer extends Component {
       let upHp
       let upAttack
 
+      console.log("battle ==>", battleRound)
 
       if(battleRound === 2) {
         upHp = this.handleUpgradeHpEnemy(hp, 2)
@@ -74,6 +99,9 @@ class EnemyConainer extends Component {
       } else if (battleRound === 3) {
         upHp = this.handleUpgradeHpEnemy(hp, 3)
         upAttack = this.handleUpgrageAttackEnemy(attack, 3)
+      } else if (battleRound === 4) {
+        upHp = this.handleUpgradeHpEnemy(hp, 4)
+        upAttack = this.handleUpgrageAttackEnemy(attack, 4)
       } else {
         upHp = hp
         upAttack = attack
@@ -109,11 +137,17 @@ class EnemyConainer extends Component {
 
       if(pass) {
 
-        round[this.state.round - 1].win = true
-
-        this.setState({battleRound: round}, ()=> {
-          this.props.clearEnemy()
-        })
+        if(this.state.round < 4) {
+          round[this.state.round - 1].win = true
+          
+          this.setState({battleRound: round}, ()=> {
+            this.props.clearEnemy()
+          })
+        } else {
+          this.setState({battleRound: round}, ()=> {
+            this.props.clearEnemy()
+          })
+        }
 
       }
 
@@ -133,9 +167,9 @@ class EnemyConainer extends Component {
     render() {
         const enemy = this.props.enemy ? this.props.enemy : []
 
-
+        console.log("gen battle", this.state.battle)
       // console.log(this.state.battle)
-      console.log("==>", this.state.hp)
+      // console.log("==>", this.state.hp)
 
       return (
             <div>
