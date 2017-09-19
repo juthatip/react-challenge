@@ -2,7 +2,9 @@ import React from 'react'
 import Col from './Col'
 
 export default ({data, handleFight, battle, index}) => {
-  const className = battle[index].isBattle ? 'hide' : 'show'
+
+console.log("==>", battle)
+  const className = battle ? 'hide' : 'show'
 
   return(
     <div>

@@ -18,7 +18,6 @@ class EnemyConainer extends Component {
             numberOfBoss: [1],
             numberOfenemy: [1,2,3],
             battle: [],
-            battleBoss: [],
             battleRound: [{ round: 1, win: false }, { round: 2, win: false},{round: 3, win: false}],
             round: 0
         }
@@ -39,14 +38,9 @@ class EnemyConainer extends Component {
       for(var n = 1; n <= 4; n++) {
         gen = this.generateEnemy(this.state.numberOfenemy)
         level.push(gen)
-
-        // gen button
-        battle.push({btn: n, isBattle: false})
       }
 
-      this.setState({battle: battle}, () => {
-        this.handleGenerateAllEnemy(level)
-      })
+      this.handleGenerateAllEnemy(level)
 
     }
 
@@ -54,12 +48,7 @@ class EnemyConainer extends Component {
         let level = []
         let boss = this.generateEnemy(this.state.numberOfBoss)
             level.push(boss)
-        this.setState({battleBoss: [{btn: 1, isBattle: false}]}, () => {
-          this.handleGenerateAllEnemy(level)
-        })
-
-        // this.props.saveEnemy(level)
-
+        this.handleGenerateAllEnemy(level)
     }
 
 
@@ -67,12 +56,7 @@ class EnemyConainer extends Component {
     handleGenerateAllEnemy(level) {
 
       this.props.saveEnemy(level)
-      this.state.battle.forEach((ele)=> {
-        ele.isBattle = false
-      })
-      this.setState({round: this.state.round + 1}, () => {
-        this.handleLevel()
-      })
+      this.handleLevel()
     }
     
     generateEnemy = (n) => {
@@ -123,62 +107,21 @@ class EnemyConainer extends Component {
       return attack.map(n => n*number)
     }
 
-
     randomItem(items) {
         const item = items[Math.floor(Math.random()*items.length)]
         return item
     }
 
     handleFight = (e) => {
-      // this.props.saveBattle(true)
+      // console.log(e.target.value)
+      let btnNum = e.target.value
 
-      // const win = round.map(w => w.win)
-      // let result = win.every(e => e === true)
+      console.log(btnNum)
 
-      let btn = this.state.battle
-      let round = this.state.battleRound
-      btn[e.target.value].isBattle = true
-
-      this.setState({battle: btn})
-
-      let pass = this.handleBattleWinAll()
-
-      // console.log("handleFight", this.state.battleBoss)
-
-      if(this.state.battleBoss.length) {
-        this.setState({battleBoss: [{btn:1, isBattle: true}]})
-        return;
-      }
-
-      if(pass) {
-
-        if(this.state.round < 3) {
-          round[this.state.round - 1].win = true
-          this.setState({battleRound: round})
-          this.props.clearEnemy()
-          this.handleNextLevel()
-        }else {
-          
-          this.props.clearEnemy()
-          this.handleBoss()
-          
-        }
-
-
-      }
-
-
-    }
-
-    handleBattleWinAll() {
-      let checkedAll = false
-
-      for(var i = 0; i < this.state.battle.length; i++) {
-        checkedAll =  this.state.battle[i].isBattle
-      }
-
-      return checkedAll
-
+      // console.log("handleFight ==>", this.props.enemy[0])
+      this.setState({ battle: [e.target.value]}, () => {
+        console.log(this.state.battle)
+      })
     }
 
     render() {
