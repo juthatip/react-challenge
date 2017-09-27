@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { saveEnemy, fetchEnemy, clearEnemy, saveBattle } from '../actions'
+import { saveEnemy, clearEnemy, saveBattle, winState, fetchEnemy } from '../actions'
 import { connect } from 'react-redux'
 import Row from '../components/Enemy/Row'
 
@@ -17,10 +17,13 @@ class EnemyConainer extends Component {
             element: ['fire', 'water', 'wind', 'earth'],
             numberOfBoss: [1],
             numberOfenemy: [1,2,3],
-            battle: [],
+            battle: [false, false, false, false],
             battleRound: [{ round: 1, win: false }, { round: 2, win: false},{round: 3, win: false}],
-            round: 0
+            round: 0,
+            winEnemy: ''
         }
+
+        //props.fetchEnemy(this.props.enemy)
 
     }
 
@@ -113,20 +116,23 @@ class EnemyConainer extends Component {
     }
 
     handleFight = (e) => {
-      // console.log(e.target.value)
-      let btnNum = e.target.value
 
-      console.log(btnNum)
+      for(var i = 0; i < this.state.battle.length; i++) {
+        this.state.battle[e.target.value] = true
+      }
 
-      // console.log("handleFight ==>", this.props.enemy[0])
-      this.setState({ battle: [e.target.value]}, () => {
-        console.log(this.state.battle)
+      const winEnemy = this.props.enemy[e.target.value]
+      
+      this.setState({ battle: this.state.battle, winEnemy: winEnemy}, () => {
+        
+        this.props.winState(this.props.enemy, this.state.winEnemy)
+
       })
     }
 
     render() {
         const enemy = this.props.enemy ? this.props.enemy : []
-      // console.log(this.state.battle)
+      console.log("render", this.props.enemy)
 
       return (
             <div>
@@ -149,4 +155,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps, { saveEnemy, fetchEnemy, clearEnemy, saveBattle })(EnemyConainer)
+export default connect(mapStateToProps, { saveEnemy, clearEnemy, saveBattle ,winState, fetchEnemy})(EnemyConainer)

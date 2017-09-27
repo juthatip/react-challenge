@@ -7,6 +7,7 @@ export const SAVE_ENEMY = 'SAVE_ENEMY'
 export const FETCH_ENEMY = 'FETCH_ENEMY'
 export const CLEAR_ENEMY = 'CLEAR_ENEMY'
 export const SAVE_BATTLE = 'SAVE_BATTLE'
+export const WIN_STATE = 'WIN_STATE'
 
 export function saveStorage(props) {
   // console.log(props)
@@ -66,10 +67,25 @@ export function saveTrainingStatus(status, monster) {
 export function saveEnemy(enemy) {
 
   return dispatch => {
-    dispatch({ type: SAVE_ENEMY, payload: enemy })
+    dispatch({ type: FETCH_ENEMY, payload: enemy })
   }
   
-} 
+}
+
+export function winState(leftEnemy, currentEnemy) {
+
+  const index = leftEnemy.indexOf(currentEnemy)
+        if(index != -1) {
+          leftEnemy.splice(index, 1);
+        }
+
+
+  console.log("old", leftEnemy)
+  // console.log("left", clearEnemy)
+  return dispatch => {
+    dispatch({ type: FETCH_ENEMY, payload: leftEnemy})
+  }
+}
 
 export function fetchEnemy(enemy) {
 

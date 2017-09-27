@@ -3,8 +3,7 @@ import Col from './Col'
 
 export default ({data, handleFight, battle, index}) => {
 
-console.log("==>", battle)
-  const className = battle ? 'hide' : 'show'
+    // const className = battle[index] ? 'hide' : 'show'
 
   return(
     <div>
@@ -15,7 +14,7 @@ console.log("==>", battle)
             </ul>
             )
         })}
-        <button className={className} onClick={handleFight} value={index}>Fight!</button>
+        <button onClick={handleFight} value={index}>Fight!</button>
         <br />
     </div>
   )
