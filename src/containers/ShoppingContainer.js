@@ -34,18 +34,18 @@ class ShoppingContainer extends Component {
       stateOperation: '',
       msgWarn: false,
       modalIsOpen: false,
-      equipmentLevel: [{ title: 'sword', level: 1 }, { title: 'armour', level: 1 }, { title: 'boot', level: 1 }],
-      btn: null
+      btn: null,
     }
 
     this.data = {}
     this.storeItem = {}
     this.currentMoney = this.props.store.currentMoney,
-      this.equipmentData = []
 
     props.fetchStorage(this.props.store)
-    props.fetchEquipment()
-    props.fetchEquipmentData(this.state.equipmentLevel)
+    // props.fetchEquipment()
+    props.fetchEquipmentData(this.props.equipmentData)
+
+    console.log("render ---1", this.props.equipment)
 
   }
 
@@ -183,8 +183,6 @@ class ShoppingContainer extends Component {
 
     let sum = this.props.store.currentMoney - this.state.priceItem
 
-    console.log("sum", this.state.priceItem)
-
 
     let equipmentLevel = this.props.equipmentData
 
@@ -254,7 +252,7 @@ class ShoppingContainer extends Component {
 
 
   render() {
-
+    console.log("render --2", this.props.equipmentData)
     return (
       <div>
 

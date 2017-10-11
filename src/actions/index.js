@@ -1,5 +1,5 @@
 export const FETCH_STORE = 'FETCH_STORE'
-export const SAVE_STORE    = 'SAVE_STORE'
+export const SAVE_STORE = 'SAVE_STORE'
 export const SAVE_TRAINING_STATUS = 'SAVE_TRAINING_STATUS'
 export const SAVE_MONSTER = 'SAVE_MONSTER'
 export const FETCH_MONSTER = 'FETCH_MONSTER'
@@ -15,22 +15,22 @@ export const SAVE_EQUIP_DATA = 'SAVE_EQUIP_DATA'
 export function saveStorage(props) {
   console.log("save props ==>", props)
 
-    return dispatch => {
-        dispatch({ type: SAVE_STORE, payload: props})
-    } 
+  return dispatch => {
+    dispatch({ type: SAVE_STORE, payload: props })
+  }
 }
 
 export function fetchStorage(props) {
-    props = props || { currentMoney: 10000 }
+  props = props || { currentMoney: 10000 }
 
-    return dispatch => {
-        dispatch({type: FETCH_STORE, payload: props })
-    }
+  return dispatch => {
+    dispatch({ type: FETCH_STORE, payload: props })
+  }
 }
 
 export function saveMonster(props) {
   return dispatch => {
-    dispatch({type: SAVE_MONSTER, payload: props})
+    dispatch({ type: SAVE_MONSTER, payload: props })
   }
 }
 
@@ -39,14 +39,14 @@ export function fetchMonster(monster) {
   const props = monster
 
   return dispatch => {
-    dispatch({type: FETCH_MONSTER, payload: props})
+    dispatch({ type: FETCH_MONSTER, payload: props })
   }
 
 }
 
 export function saveTrainingStatus(status, monster) {
 
-  if(monster.status.stamina > 0) {
+  if (monster.status.stamina > 0) {
 
     if (status === 'run') {
       monster.status.agi += 5
@@ -55,14 +55,14 @@ export function saveTrainingStatus(status, monster) {
     } else if (status === 'swim') {
       monster.status.hp += 20
     }
-    
-    monster.status.stamina -= 20 
+
+    monster.status.stamina -= 20
   }
 
   // console.log(monster)
 
   return dispatch => {
-    dispatch({type: SAVE_TRAINING_STATUS })
+    dispatch({ type: SAVE_TRAINING_STATUS })
   }
 }
 
@@ -72,32 +72,32 @@ export function saveEnemy(enemy) {
   return dispatch => {
     dispatch({ type: FETCH_ENEMY, payload: enemy })
   }
-  
+
 }
 
 export function winState(leftEnemy, currentEnemy) {
 
   const index = leftEnemy.indexOf(currentEnemy)
-        if(index != -1) {
-          leftEnemy.splice(index, 1);
-        }
+  if (index != -1) {
+    leftEnemy.splice(index, 1);
+  }
 
   return dispatch => {
-    dispatch({ type: FETCH_ENEMY, payload: leftEnemy})
+    dispatch({ type: FETCH_ENEMY, payload: leftEnemy })
   }
 }
 
 export function fetchEnemy(enemy) {
 
   return dispatch => {
-    dispatch({type: FETCH_ENEMY, payload: enemy})
+    dispatch({ type: FETCH_ENEMY, payload: enemy })
   }
 }
 
 export function clearEnemy() {
 
   return dispatch => {
-    dispatch({type: CLEAR_ENEMY})
+    dispatch({ type: CLEAR_ENEMY })
   }
 }
 
@@ -105,41 +105,47 @@ export function saveBattle(status) {
 
 
   return dispatch => {
-    dispatch({type: SAVE_BATTLE, payload: status})
+    dispatch({ type: SAVE_BATTLE, payload: status })
   }
 }
 
 // product
-export function fetchEquipment() {
-
-  const data = [
-    {title: 'sword', price: 500},
-    {title: 'armour', price: 200},
-    {title: 'boot', price: 100}
+export function fetchEquipment(data) {
+  let equipData = [
+    { title: 'sword', price: 500 },
+    { title: 'armour', price: 200 },
+    { title: 'boot', price: 100 }
   ]
 
+  const props = data || equipData
   return dispatch => {
-    dispatch({type: FETCH_EQUIP, payload: data})
+    dispatch({ type: FETCH_EQUIP, payload: props })
   }
 }
 
-export function fetchEquipmentData(level) {
-
-  const data = [
-    {title: 'sword', price: 500},
-    {title: 'armour', price: 200},
-    {title: 'boot', price: 100}
+export function fetchEquipmentData(props) {
+  let equipData = [
+    { title: 'sword', price: 500 },
+    { title: 'armour', price: 200 },
+    { title: 'boot', price: 100 }
   ]
 
+  let level = [{ title: 'sword', level: 1 }, { title: 'armour', level: 1 }, { title: 'boot', level: 1 }]
   let equipmentData = []
-  for(let n = 0; n < data.length; n++) {
-    if(data[n].title === level[n].title) {
-      equipmentData.push({title: data[n].title, price: data[n].price, level: level[n].level})
+
+  if (!props.length) {
+    let data = equipData
+    for (let n = 0; n < data.length; n++) {
+      if (data[n].title === level[n].title) {
+        equipmentData.push({ title: data[n].title, price: data[n].price, level: level[n].level })
       }
+    }
+  } else {
+    equipmentData = props
   }
 
   return dispatch => {
-    dispatch({type: EQUIP_DATA, payload: equipmentData})
+    dispatch({ type: EQUIP_DATA, payload: equipmentData })
   }
 
 }
@@ -147,7 +153,7 @@ export function fetchEquipmentData(level) {
 export function saveEquipmentData(data) {
 
   return dispatch => {
-    dispatch({type: SAVE_EQUIP_DATA, payload: data})
+    dispatch({ type: SAVE_EQUIP_DATA, payload: data })
   }
 }
 
