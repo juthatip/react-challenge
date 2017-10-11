@@ -17,3 +17,7 @@ body {
 .hide {
   opacity: 0;
 }
+
+.clear {
+  clear: both;
+}

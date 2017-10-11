@@ -8,9 +8,12 @@ export const FETCH_ENEMY = 'FETCH_ENEMY'
 export const CLEAR_ENEMY = 'CLEAR_ENEMY'
 export const SAVE_BATTLE = 'SAVE_BATTLE'
 export const WIN_STATE = 'WIN_STATE'
+export const FETCH_EQUIP = 'FETCH_EQUIP'
+export const EQUIP_DATA = 'EQUIP_DATA'
+export const SAVE_EQUIP_DATA = 'SAVE_EQUIP_DATA'
 
 export function saveStorage(props) {
-  // console.log(props)
+  console.log("save props ==>", props)
 
     return dispatch => {
         dispatch({ type: SAVE_STORE, payload: props})
@@ -79,9 +82,6 @@ export function winState(leftEnemy, currentEnemy) {
           leftEnemy.splice(index, 1);
         }
 
-
-  console.log("old", leftEnemy)
-  // console.log("left", clearEnemy)
   return dispatch => {
     dispatch({ type: FETCH_ENEMY, payload: leftEnemy})
   }
@@ -103,9 +103,52 @@ export function clearEnemy() {
 
 export function saveBattle(status) {
 
-  console.log(status)
 
   return dispatch => {
     dispatch({type: SAVE_BATTLE, payload: status})
   }
 }
+
+// product
+export function fetchEquipment() {
+
+  const data = [
+    {title: 'sword', price: 500},
+    {title: 'armour', price: 200},
+    {title: 'boot', price: 100}
+  ]
+
+  return dispatch => {
+    dispatch({type: FETCH_EQUIP, payload: data})
+  }
+}
+
+export function fetchEquipmentData(level) {
+
+  const data = [
+    {title: 'sword', price: 500},
+    {title: 'armour', price: 200},
+    {title: 'boot', price: 100}
+  ]
+
+  let equipmentData = []
+  for(let n = 0; n < data.length; n++) {
+    if(data[n].title === level[n].title) {
+      equipmentData.push({title: data[n].title, price: data[n].price, level: level[n].level})
+      }
+  }
+
+  return dispatch => {
+    dispatch({type: EQUIP_DATA, payload: equipmentData})
+  }
+
+}
+
+export function saveEquipmentData(data) {
+
+  return dispatch => {
+    dispatch({type: SAVE_EQUIP_DATA, payload: data})
+  }
+}
+
+
