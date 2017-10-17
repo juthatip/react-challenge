@@ -4,7 +4,7 @@ import Nav from '../components/Layout/Nav'
 
 import Shopping from './ShoppingContainer'
 import EnemyContainer from './EnemyContainer'
-import StartContainer from './StartContainer'
+import MonsterContainer from './MonsterContainer'
 import StorageContainer from './StorageContainer'
 import TrainingContainer from './TrainingContainer'
 
@@ -14,7 +14,7 @@ class Main extends Component {
       <div>
         <Nav />
         <Switch>
-          <Route path="/start" component={StartContainer} />
+          <Route path="/start" component={MonsterContainer} />
           <Route path="/enemy" component={EnemyContainer} />
           <Route path="/shop" component={Shopping} />
           <Route path="/storage" component={StorageContainer} />

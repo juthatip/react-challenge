@@ -6,6 +6,8 @@ import ShowMoney from '../components/Shopping'
 import Equipment from '../components/Shopping/Equipment'
 import ModalFood from '../components/Shopping/ModalFood'
 import ModalEquipment from '../components/Shopping/ModalEquipment'
+import Tabs from '../components/Tabs/Tabs'
+import Tab from '../components/Tabs/Tab'
 
 const customStyles = {
   content: {
@@ -41,11 +43,10 @@ class ShoppingContainer extends Component {
     this.storeItem = {}
     this.currentMoney = this.props.store.currentMoney,
 
-    props.fetchStorage(this.props.store)
+      props.fetchStorage(this.props.store)
     // props.fetchEquipment()
     props.fetchEquipmentData(this.props.equipmentData)
 
-    console.log("render ---1", this.props.equipment)
 
   }
 
@@ -128,7 +129,7 @@ class ShoppingContainer extends Component {
 
   handleCalculateEquipment = () => {
 
-    
+
     let price = null
 
     for (let i = 0; i < this.props.equipmentData.length; i++) {
@@ -137,14 +138,14 @@ class ShoppingContainer extends Component {
       }
     }
 
-    this.setState({ priceItem: price }, ()=> {
+    this.setState({ priceItem: price }, () => {
       this.handleCalculateMoneyEquipment()
     })
   }
 
   handleCalculateMoneyEquipment = () => {
     this.currentMoney = this.props.store.currentMoney - this.state.priceItem
-    if(this.currentMoney < 0) {
+    if (this.currentMoney < 0) {
       this.setState({ msgWarn: true })
     }
   }
@@ -197,11 +198,11 @@ class ShoppingContainer extends Component {
     this.setState({ modalIsOpen: false });
     this.props.saveEquipmentData(this.props.equipmentData)
 
-    this.setState({currentMoney: sum}, () => {
+    this.setState({ currentMoney: sum }, () => {
       this.data = {
         currentMoney: this.state.currentMoney
       }
-  
+
       this.props.saveStorage(this.data)
     })
   }
@@ -252,7 +253,9 @@ class ShoppingContainer extends Component {
 
 
   render() {
-    console.log("render --2", this.props.equipmentData)
+
+    console.log("==>", this.props)
+
     return (
       <div>
 
@@ -260,23 +263,30 @@ class ShoppingContainer extends Component {
 
         {/* <ShowMoney currentMoney={this.props.store.currentMoney} storeItem={this.props.store.selectedItem} /> */}
 
-        <div>Food</div>
-        <ul className="list-item">
-          <li>meat
+        <Tabs>
+          <Tab iconClassName={'icon-class-0'} linkClassName={'link-class-0'} tabName="Items">
+            <ul className="list-item">
+              <li>meat
             <p>$2500</p>
-            <p><button onClick={this.buyItem.bind(this, 'meat')} value="item-food">buy</button></p>
-          </li>
-          <li>water
+                <p><button onClick={this.buyItem.bind(this, 'meat')} value="item-food">buy</button></p>
+              </li>
+              <li>water
             <p>$1000</p>
-            <p><button onClick={this.buyItem.bind(this, 'water')} value="item-food">buy</button></p>
-          </li>
-          <li>candy
+                <p><button onClick={this.buyItem.bind(this, 'water')} value="item-food">buy</button></p>
+              </li>
+              <li>candy
             <p>$500</p>
-            <p><button onClick={this.buyItem.bind(this, 'candy')} value="item-food">buy</button></p>
-          </li>
-        </ul>
+                <p><button onClick={this.buyItem.bind(this, 'candy')} value="item-food">buy</button></p>
+              </li>
+            </ul>
 
-        <Equipment data={this.props.equipmentData} buyItem={this.buyItem} />
+          </Tab>
+          <Tab iconClassName={'icon-class-1'} linkClassName={'link-class-1'} tabName="Equipment">
+            <Equipment data={this.props.equipmentData} buyItem={this.buyItem} />
+          </Tab>
+        </Tabs>
+
+        {/* <Equipment data={this.props.equipmentData} buyItem={this.buyItem} /> */}
 
         <Modal
           isOpen={this.state.modalIsOpen}
