@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { saveMonster, fetchMonster } from '../actions'
+import { saveMonster, fetchMonster,  } from '../actions'
 
 class StartContainer extends Component {
   constructor(props) {
@@ -110,7 +110,7 @@ class StartContainer extends Component {
       this.props.fetchMonster(this.state.player)
     })
 
-
+    // this.renderPlayerMonster()
   }
 
   randomItem(items) {
@@ -135,10 +135,25 @@ class StartContainer extends Component {
       </div>
     )
   }
+
+  renderPlayerMonster() {
+    if(!this.props.monster.hasOwnProperty('equipment')) return
+
+    return (
+      <div>
+        {this.props.monster.equipment.map((d) => {
+          return (
+            <div key={d.title}>{d.title} Lv.{d.level}</div>
+          )
+        })}
+      </div>
+    )
+  }
       
   render() {
     const classes = this.state.close ? 'hide' : 'show'
 
+    console.log("monster", this.props.monster.equipment)
     return (
       <div className="App">
         <div className="App-header">
@@ -147,6 +162,7 @@ class StartContainer extends Component {
         { !this.state.close ? <h1>Choose your Monster</h1> : '' }
         <p>{this.props.monster.name}</p>
         {this.renderPlayerStatus()}
+        {this.renderPlayerMonster()}
         <a onClick={this.randomMonster} className={`btn ${classes}`}>Random</a>
       </div>
     );

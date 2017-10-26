@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
-import { saveStorage, fetchStorage, fetchEquipment, fetchEquipmentData, saveEquipmentData } from '../actions'
+import { saveStorage, fetchStorage, fetchEquipment, fetchEquipmentData, saveEquipmentData, updateMonster } from '../actions'
 import ShowMoney from '../components/Shopping'
 import Equipment from '../components/Shopping/Equipment'
 import ModalFood from '../components/Shopping/ModalFood'
@@ -194,9 +194,11 @@ class ShoppingContainer extends Component {
       }
     }
 
-    // console.log("submit", this.props.equipmentData)
+    
     this.setState({ modalIsOpen: false });
     this.props.saveEquipmentData(this.props.equipmentData)
+
+    this.props.updateMonster(this.props.equipmentData)
 
     this.setState({ currentMoney: sum }, () => {
       this.data = {
@@ -254,7 +256,7 @@ class ShoppingContainer extends Component {
 
   render() {
 
-    console.log("==>", this.props)
+    // console.log("==>", this.props)
 
     return (
       <div>
@@ -313,4 +315,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { saveStorage, fetchStorage, fetchEquipment, fetchEquipmentData, saveEquipmentData })(ShoppingContainer)
+export default connect(mapStateToProps, { saveStorage, fetchStorage, fetchEquipment, fetchEquipmentData, saveEquipmentData, updateMonster })(ShoppingContainer)

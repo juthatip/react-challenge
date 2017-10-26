@@ -3,6 +3,7 @@ export const SAVE_STORE = 'SAVE_STORE'
 export const SAVE_TRAINING_STATUS = 'SAVE_TRAINING_STATUS'
 export const SAVE_MONSTER = 'SAVE_MONSTER'
 export const FETCH_MONSTER = 'FETCH_MONSTER'
+export const UPDATE_MONSTER = 'UPDATE_MONSTER'
 export const SAVE_ENEMY = 'SAVE_ENEMY'
 export const FETCH_ENEMY = 'FETCH_ENEMY'
 export const CLEAR_ENEMY = 'CLEAR_ENEMY'
@@ -13,7 +14,7 @@ export const EQUIP_DATA = 'EQUIP_DATA'
 export const SAVE_EQUIP_DATA = 'SAVE_EQUIP_DATA'
 
 export function saveStorage(props) {
-  console.log("save props ==>", props)
+  // console.log("save props ==>", props)
 
   return dispatch => {
     dispatch({ type: SAVE_STORE, payload: props })
@@ -29,6 +30,7 @@ export function fetchStorage(props) {
 }
 
 export function saveMonster(props) {
+  console.log("==>",props)
   return dispatch => {
     dispatch({ type: SAVE_MONSTER, payload: props })
   }
@@ -43,6 +45,14 @@ export function fetchMonster(monster) {
   }
 
 }
+
+export function updateMonster(props) {
+
+  return dispatch => {
+    dispatch({ type: UPDATE_MONSTER, payload: props})
+  }
+}
+
 
 export function saveTrainingStatus(status, monster) {
 
